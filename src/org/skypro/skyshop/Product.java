@@ -20,10 +20,8 @@ public class Product {
     }
 
     public int getProductPrice() {
-
         return this.productPrice;
     }
-
 
     @Override
     public String toString() {
