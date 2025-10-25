@@ -69,7 +69,7 @@ public class ProductBasket {
     }
 
     public void empty() {
-        this.products = new Product[5];
+        this.products = new Product[this.products.length];
         this.cntProductBasket = 0;
     }
 
