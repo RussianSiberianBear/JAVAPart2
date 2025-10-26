@@ -4,28 +4,30 @@ public class App {
 
     public static void main() {
 
-        System.out.println("JAVA часть 2. Домашняя работа №2");
+        System.out.println("JAVA часть 2. Домашняя работа №3");
 
-        ProductBasket basket = new ProductBasket(5);
+
         Product[] productsArr = {
-                new Product("1-й продукт", 100),
-                new Product("2-й продукт", 200),
-                new Product("3-й продукт", 300),
-                new Product("4-й продукт", 400),
-                new Product("5-й продукт", 500)
+                new DiscountedProduct("1-й продукт", 100, 10),
+                new SimpleProduct("2-й продукт", 200),
+                new DiscountedProduct("3-й продукт", 300, 20),
+                new FixPriceProduct("4-й продукт"),
+                new SimpleProduct("5-й продукт", 500)
         };
+
+        ProductBasket basket = new ProductBasket(productsArr.length);
 
 //1  Добавление продукта в корзину.
         for (Product p : productsArr) {
-            if (basket.productAdd(p)){
-                System.out.println(p.getProductName() + "добавлен в корзину");
+            if (basket.productAdd(p)) {
+                System.out.println(p.getProductName() + " добавлен в корзину");
             }
         }
 
 //2      Добавление продукта в заполненную корзину, в которой нет свободного места.
-        if (basket.productAdd(new Product("6-продукт", 600))){
+        if (basket.productAdd(new SimpleProduct("6-продукт", 600))) {
             System.out.println("6-й продукт добавлен в корзину");
-        }else{
+        } else {
             System.out.println("Невозможно добавить продукт!");
         }
 
