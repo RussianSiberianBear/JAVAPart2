@@ -7,14 +7,19 @@ public class ProductBasket {
     private Product[] products;
 
     public ProductBasket(int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Размер корзины не может быть равен нулю или быть отрицательным!");
+        }
         this.products = new Product[size];
         this.cntProductBasket = 0;
     }
 
 
     public boolean isProductExistsByName(String productName) {
-
-        if (this.cntProductBasket == 0) {
+        if (productName == null || productName.isEmpty()) {
+            throw new IllegalArgumentException("Наименование искомого товара не может быть пустым!");
+        }
+        if (isEmpty()) {
             return false;
         }
         for (Product product : this.products) {
@@ -27,9 +32,14 @@ public class ProductBasket {
 
 
     public boolean productAdd(Product product) {
-        if (this.cntProductBasket == this.products.length) {
+        if (product == null) {
+            throw new IllegalArgumentException("Добавляемый в корзину продукт не может быть NULL");
+        }
+
+        if (this.isFull()) {
             return false;
         }
+
         for (int i = 0; i < this.products.length; i++) {
             if (this.products[i] == null) {
                 this.products[i] = product;
@@ -43,6 +53,10 @@ public class ProductBasket {
 
     public int getTotalBasketCost() {
         int sum = 0;
+        if (isEmpty()) {
+            return sum;    // Принудительно просто 0 не возвращаем, так как можем переопределить тип возвращаемого значения и
+            // в таком случае не надо искать где еще что исправлять
+        }
         for (Product product : this.products) {
             if (product != null) {
                 sum += product.getProductPrice();
@@ -51,11 +65,24 @@ public class ProductBasket {
         return sum;
     }
 
+    public int getCntSpecialProduct() {
+        int cnt = 0;
+        if (isEmpty()) {
+            return 0;     // тут можно принудительно 0 вернуть, так как кол-во товаров в нашем контексте всегда целое
+        }
+        for (Product product : this.products) {
+            if (product != null && product.isSpecial()) {
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+
 
     @Override
     public String toString() {
         String result = "";
-        if (this.cntProductBasket == 0) {
+        if (this.isEmpty()) {
             return ("В корзине пусто!");
         }
 
@@ -65,7 +92,17 @@ public class ProductBasket {
             }
         }
         result += "\nИтого: " + this.getTotalBasketCost();
+        result += "\nСпециальных товаров: " + this.getCntSpecialProduct();
         return result;
+    }
+
+
+    public boolean isFull() {
+        return (this.cntProductBasket == this.products.length);
+    }
+
+    public boolean isEmpty() {
+        return this.cntProductBasket == 0;
     }
 
     public void empty() {
