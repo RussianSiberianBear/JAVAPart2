@@ -23,12 +23,12 @@ public class DiscountedProduct extends Product {
 
     @Override
     public int getProductPrice() {
-        return (this.basePrice  - this.basePrice * this.discount / 100);
+        return (this.basePrice - this.basePrice * this.discount / 100);
     }
 
     @Override
     public String toString() {
-        return this.productName + ": " + this.getProductPrice() + " (скидка " + this.discount + "%)";
+        return this.name + ": " + this.getProductPrice() + " (скидка " + this.discount + "%)";
     }
 
 }
