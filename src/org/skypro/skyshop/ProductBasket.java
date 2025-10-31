@@ -23,7 +23,7 @@ public class ProductBasket {
             return false;
         }
         for (Product product : this.products) {
-            if (product != null && product.getProductName().equals(productName)) {
+            if (product != null && product.getName().equals(productName)) {
                 return true;
             }
         }

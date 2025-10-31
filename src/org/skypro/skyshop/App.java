@@ -20,7 +20,7 @@ public class App {
 //1  Добавление продукта в корзину.
         for (Product p : productsArr) {
             if (basket.productAdd(p)) {
-                System.out.println(p.getProductName() + " добавлен в корзину");
+                System.out.println(p.getName() + " добавлен в корзину");
             }
         }
 

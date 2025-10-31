@@ -23,6 +23,6 @@ public class SimpleProduct extends Product {
 
     @Override
     public String toString() {
-        return this.productName + ": " + this.getProductPrice();
+        return this.name + ": " + this.getProductPrice();
     }
 }
