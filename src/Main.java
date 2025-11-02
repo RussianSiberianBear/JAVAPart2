@@ -3,7 +3,6 @@ import org.skypro.exeption.BestResultNotFound;
 import org.skypro.search.Searchable;
 import org.skypro.skyshop.*;
 import org.skypro.search.SearchEngine;
-
 import java.util.Arrays;
 
 
@@ -14,7 +13,6 @@ public class Main {
 
         // 1 Реализация проверок в конструкторе класса Product
         // Давно сделано, еще в предыдущих ДЗ
-
 
         //2  Демонстрация проверки данных в классе main
         System.out.println();
@@ -72,7 +70,7 @@ public class Main {
             System.out.println("Ошибка ! " + e.getMessage());
         }
 
-        // Создаем  нормальные продукты
+        // Создаем нормальные продукты
         System.out.println();
         System.out.println("Создаем продукты без ошибок в имени и цене");
         Product[] productsArr = null;
@@ -120,7 +118,6 @@ public class Main {
 
         System.out.println("Ищем объект, в котором есть строка поиска");
         Searchable obj;
-
         try {
             obj = searchEngine.getSearchTerm("кош");
             if (obj != null) {
@@ -140,8 +137,6 @@ public class Main {
         } catch (BestResultNotFound e) {
             System.out.println("Ошибка ! " + e.getMessage());
         }
-
-
     }
 
     // ******************** Конец main *********************************
@@ -187,7 +182,6 @@ public class Main {
                     new Article("Вакансии", "Свежие вакансии на сегодня."),
                     new Article("Женские товары", "Косметика, духи и другие штучки для женщин.")
             };
-
             for (Searchable p : articleArr) {
                 if (searchEngine.add(p)) {
                     System.out.println("\"" + p.getName() + "\" добавлен для демонстрации поиска");
@@ -198,7 +192,6 @@ public class Main {
 
             System.out.println();
             System.out.println("Демонстрация поиска");
-
 
             Searchable[] result;
 
@@ -217,13 +210,11 @@ public class Main {
                 }
             }
 
-
             // Ищем по статьям
             System.out.println();
             System.out.println("Найденные статьи:");
             result = searchEngine.search("кош");
             System.out.println(Arrays.toString(result));
-
 
             // Выводим информацию об имени и типе найденных объектах
             System.out.println();
@@ -233,11 +224,8 @@ public class Main {
                     System.out.println(obj.getStringRepresentation());
                 }
             }
-
-
         } catch (Exception e) {
             System.out.println("Ошибка ! " + e.getMessage());
         }
-
     }
 }

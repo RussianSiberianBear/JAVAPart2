@@ -51,12 +51,12 @@ public class SearchEngine {
         return (this.cnt == this.searchables.length);
     }
 
-
     public static int countSubstringIgnoreCase(String text, String substring) {
 
         if (text == null || substring == null || substring.isEmpty()) {
             return 0;
         }
+
         text = text.toLowerCase();
         substring = substring.toLowerCase();
         int count = 0;
@@ -65,7 +65,6 @@ public class SearchEngine {
             count++;
             index += substring.length(); // Перемещаемся после найденной подстроки
         }
-
         return count;
     }
 
@@ -96,6 +95,5 @@ public class SearchEngine {
         } else {
             throw new BestResultNotFound("При поиске \"" + search + "\" подходящий объект не найден!");
         }
-
     }
 }

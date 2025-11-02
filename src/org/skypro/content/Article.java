@@ -11,7 +11,6 @@ public class Article implements Searchable {
         this.content = content;
     }
 
-
     public String getName() {
         return name;
     }
