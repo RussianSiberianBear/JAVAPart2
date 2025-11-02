@@ -30,5 +30,4 @@ public class DiscountedProduct extends Product {
     public String toString() {
         return this.name + ": " + this.getProductPrice() + " (скидка " + this.discount + "%)";
     }
-
 }

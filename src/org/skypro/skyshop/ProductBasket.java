@@ -3,7 +3,6 @@ package org.skypro.skyshop;
 public class ProductBasket {
 
     private int cntProductBasket;
-
     private Product[] products;
 
     public ProductBasket(int size) {
@@ -13,7 +12,6 @@ public class ProductBasket {
         this.products = new Product[size];
         this.cntProductBasket = 0;
     }
-
 
     public boolean isProductExistsByName(String productName) {
         if (productName == null || productName.isEmpty()) {
@@ -29,7 +27,6 @@ public class ProductBasket {
         }
         return false;
     }
-
 
     public boolean productAdd(Product product) {
         if (product == null) {
@@ -49,7 +46,6 @@ public class ProductBasket {
         }
         return true;
     }
-
 
     public int getTotalBasketCost() {
         int sum = 0;
@@ -78,7 +74,6 @@ public class ProductBasket {
         return cnt;
     }
 
-
     @Override
     public String toString() {
         String result = "";
@@ -96,7 +91,6 @@ public class ProductBasket {
         return result;
     }
 
-
     public boolean isFull() {
         return (this.cntProductBasket == this.products.length);
     }
@@ -109,6 +103,4 @@ public class ProductBasket {
         this.products = new Product[this.products.length];
         this.cntProductBasket = 0;
     }
-
-
 }
