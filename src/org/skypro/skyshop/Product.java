@@ -2,6 +2,7 @@ package org.skypro.skyshop;
 
 import org.skypro.search.Searchable;
 
+
 public abstract class Product implements Searchable {
     protected String name;
 

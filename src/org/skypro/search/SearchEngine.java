@@ -1,5 +1,7 @@
 package org.skypro.search;
 
+import org.skypro.exeption.BestResultNotFound;
+
 public class SearchEngine {
     private Searchable[] searchables;
     private int cnt = 0;
@@ -47,5 +49,53 @@ public class SearchEngine {
 
     public boolean isFull() {
         return (this.cnt == this.searchables.length);
+    }
+
+
+    public static int countSubstringIgnoreCase(String text, String substring) {
+
+        if (text == null || substring == null || substring.isEmpty()) {
+            return 0;
+        }
+        text = text.toLowerCase();
+        substring = substring.toLowerCase();
+        int count = 0;
+        int index = 0;
+        while ((index = text.indexOf(substring, index)) != -1) {
+            count++;
+            index += substring.length(); // Перемещаемся после найденной подстроки
+        }
+
+        return count;
+    }
+
+    public Searchable getSearchTerm(String search) throws BestResultNotFound {
+
+        int idxObj = -1;
+        Searchable result = null;   // возвращаем 1 самый подходящий товар или выбрасываем исключение, если нет его
+        int[] cntFound = new int[this.searchables.length]; // кол-во вхождений искомой строки по объектам
+
+        for (int i = 0; i < this.searchables.length; i++) {
+            if (this.searchables[i] != null) {
+                cntFound[i] = countSubstringIgnoreCase(this.searchables[i].searchTerm(), search);
+            }
+        }
+
+        for (int j : cntFound) {
+            if (j != 0 && j > idxObj) {
+                idxObj = j;
+            }
+        }
+
+        if (idxObj >= 0) {
+            result = this.searchables[idxObj];
+        }
+
+        if (result != null) {
+            return result;
+        } else {
+            throw new BestResultNotFound("При поиске \"" + search + "\" подходящий объект не найден!");
+        }
+
     }
 }
