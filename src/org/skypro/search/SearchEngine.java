@@ -2,53 +2,29 @@ package org.skypro.search;
 
 import org.skypro.exeption.BestResultNotFound;
 
-public class SearchEngine {
-    private Searchable[] searchables;
-    private int cnt = 0;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    public SearchEngine(int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Размер не может быть равен нулю или быть отрицательным!");
-        }
-        this.searchables = new Searchable[size];
+public class SearchEngine {
+    private List<Searchable> searchables = new ArrayList<>();
+
+    public SearchEngine(Searchable[] search) {
+        Collections.addAll(searchables, search);
     }
 
-    public Searchable[] search(String search) {
-        Searchable[] result = new Searchable[5];
-        int idx = 0;
+    public ArrayList<Searchable> search(String search) throws BestResultNotFound {
 
-        for (Searchable searchable : this.searchables) {
-            if (searchable.searchTerm().contains(search)) {
-                result[idx++] = searchable;
+        ArrayList<Searchable> result = new ArrayList<>();
+        for (Searchable searchable : searchables) {
+            if (countSubstringIgnoreCase(searchable.searchTerm(), search) > 0) {
+                result.add(searchable);
             }
-            if (idx == 5) {
-                break;
-            }
+        }
+        if (result.isEmpty()) {
+            throw new BestResultNotFound("При поиске \"" + search + "\" подходящий объект не найден!");
         }
         return result;
-    }
-
-    public boolean add(Searchable obj) {
-        if (obj == null) {
-            throw new IllegalArgumentException("Добавляемый объект не может быть NULL");
-        }
-
-        if (this.isFull()) {
-            return false;
-        }
-
-        for (int i = 0; i < this.searchables.length; i++) {
-            if (this.searchables[i] == null) {
-                this.searchables[i] = obj;
-                this.cnt++;
-                break;
-            }
-        }
-        return true;
-    }
-
-    public boolean isFull() {
-        return (this.cnt == this.searchables.length);
     }
 
     public static int countSubstringIgnoreCase(String text, String substring) {
@@ -68,32 +44,4 @@ public class SearchEngine {
         return count;
     }
 
-    public Searchable getSearchTerm(String search) throws BestResultNotFound {
-
-        int idxObj = -1;
-        Searchable result = null;   // возвращаем 1 самый подходящий товар или выбрасываем исключение, если нет его
-        int[] cntFound = new int[this.searchables.length]; // кол-во вхождений искомой строки по объектам
-
-        for (int i = 0; i < this.searchables.length; i++) {
-            if (this.searchables[i] != null) {
-                cntFound[i] = countSubstringIgnoreCase(this.searchables[i].searchTerm(), search);
-            }
-        }
-
-        for (int j : cntFound) {
-            if (j != 0 && j > idxObj) {
-                idxObj = j;
-            }
-        }
-
-        if (idxObj >= 0) {
-            result = this.searchables[idxObj];
-        }
-
-        if (result != null) {
-            return result;
-        } else {
-            throw new BestResultNotFound("При поиске \"" + search + "\" подходящий объект не найден!");
-        }
-    }
 }

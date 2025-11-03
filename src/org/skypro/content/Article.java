@@ -11,6 +11,16 @@ public class Article implements Searchable {
         this.content = content;
     }
 
+    @Override
+    public int getProductPrice() {
+        return 0;
+    }
+
+    @Override
+    public boolean isSpecial(){
+        return false;
+    }
+
     public String getName() {
         return name;
     }

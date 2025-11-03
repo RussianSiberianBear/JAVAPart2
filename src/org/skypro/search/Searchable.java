@@ -8,6 +8,10 @@ public interface Searchable {
 
     String getContentType();
 
+    int getProductPrice();
+
+    boolean isSpecial();
+
     default String getStringRepresentation() {
         return "Имя объекта \"" + this.getName() + "\" Тип \"" + this.getContentType() + "\"";
     }
