@@ -40,8 +40,7 @@ public class Main {
 
             // Удаляем cуществующий продукт из корзины
             System.out.println("Удаляем существующий продукт из корзины");
-            List<Product> delProducts;
-            delProducts = basket.deleteProductByName("1-й продукт");
+            ArrayList<Searchable> delProducts = basket.deleteProductByName("1-й продукт");
             System.out.println("Список удаленных продуктов:\n" + delProducts);
             System.out.println();
             System.out.println("Теперь в корзине следующие продукты:");

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ProductBasket <T extends Searchable>{
+public class ProductBasket {
 
     private List<Searchable> products = new ArrayList<>();
 
@@ -74,6 +74,7 @@ public class ProductBasket <T extends Searchable>{
     public boolean isEmpty() {
         return products.isEmpty();
     }
+
     public void empty() {
         this.products = new ArrayList<>();
     }
@@ -88,9 +89,9 @@ public class ProductBasket <T extends Searchable>{
         Iterator<Searchable> iterator = this.products.iterator();
 
         if (isEmpty()) {
-            return  new ArrayList<>();
+            return new ArrayList<>();
         }
-         while (iterator.hasNext()) {
+        while (iterator.hasNext()) {
             Searchable product = iterator.next();
             if (product.getName().equals(productName)) {
                 delProducts.add(product);
