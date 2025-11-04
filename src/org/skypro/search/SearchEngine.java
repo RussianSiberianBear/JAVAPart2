@@ -13,9 +13,9 @@ public class SearchEngine {
         Collections.addAll(searchables, search);
     }
 
-    public ArrayList<Searchable> search(String search) throws BestResultNotFound {
+    public List<Searchable> search(String search) throws BestResultNotFound {
 
-        ArrayList<Searchable> result = new ArrayList<>();
+        List<Searchable> result = new ArrayList<>();
         for (Searchable searchable : searchables) {
             if (countSubstringIgnoreCase(searchable.searchTerm(), search) > 0) {
                 result.add(searchable);

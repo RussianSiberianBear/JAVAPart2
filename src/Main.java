@@ -62,7 +62,7 @@ public class Main {
             System.out.println();
             System.out.println("Ищем имеющийся продукт");
             SearchEngine searchEngine = new SearchEngine(productsArr);
-            ArrayList<Searchable> findProducts = searchEngine.search("кош");
+            List<Searchable> findProducts = searchEngine.search("кош");
             if (findProducts == null || findProducts.isEmpty()) {
                 System.out.println("Список поиска пуст!");
             } else {
