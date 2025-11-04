@@ -3,7 +3,6 @@ import org.skypro.search.Searchable;
 import org.skypro.search.SearchEngine;
 import org.skypro.skyshop.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -40,7 +39,7 @@ public class Main {
 
             // Удаляем cуществующий продукт из корзины
             System.out.println("Удаляем существующий продукт из корзины");
-            ArrayList<Searchable> delProducts = basket.deleteProductByName("1-й продукт");
+            List<Searchable> delProducts = basket.deleteProductByName("1-й продукт");
             System.out.println("Список удаленных продуктов:\n" + delProducts);
             System.out.println();
             System.out.println("Теперь в корзине следующие продукты:");

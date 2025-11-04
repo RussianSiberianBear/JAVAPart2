@@ -79,13 +79,13 @@ public class ProductBasket {
         this.products = new ArrayList<>();
     }
 
-    public ArrayList<Searchable> deleteProductByName(String productName) {
+    public List<Searchable> deleteProductByName(String productName) {
 
         if (productName == null || productName.isBlank()) {
             throw new IllegalArgumentException("Наименование удаляемого товара не может быть пустым!");
         }
 
-        ArrayList<Searchable> delProducts = new ArrayList<>();
+        List<Searchable> delProducts = new ArrayList<>();
         Iterator<Searchable> iterator = this.products.iterator();
 
         if (isEmpty()) {
