@@ -29,7 +29,7 @@ public class SearchEngine {
 
     public static int countSubstringIgnoreCase(String text, String substring) {
 
-        if (text == null || substring == null || substring.isEmpty()) {
+        if (!(text != null && !text.isEmpty() && substring != null && !substring.isEmpty())) {
             return 0;
         }
 
