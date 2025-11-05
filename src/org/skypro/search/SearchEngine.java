@@ -2,23 +2,24 @@ package org.skypro.search;
 
 import org.skypro.exeption.BestResultNotFound;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SearchEngine {
-    private List<Searchable> searchables = new ArrayList<>();
+    private Map<String, Searchable> searchables = new TreeMap<>();
 
     public SearchEngine(Searchable[] search) {
-        Collections.addAll(searchables, search);
+
+        for (Searchable s : search) {
+            searchables.put(s.getName(), s);
+        }
     }
 
-    public List<Searchable> search(String search) throws BestResultNotFound {
+    public Map<String, Searchable> search(String search) throws BestResultNotFound {
 
-        List<Searchable> result = new ArrayList<>();
-        for (Searchable searchable : searchables) {
-            if (countSubstringIgnoreCase(searchable.searchTerm(), search) > 0) {
-                result.add(searchable);
+        Map<String, Searchable> result = new HashMap<>();
+        for (Map.Entry<String, Searchable> product : searchables.entrySet()) {
+            if (product != null && countSubstringIgnoreCase(product.getValue().searchTerm(), search) > 0) {
+                result.put(product.getValue().getName(), product.getValue());
             }
         }
         if (result.isEmpty()) {
