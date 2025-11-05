@@ -5,7 +5,7 @@ import org.skypro.exeption.BestResultNotFound;
 import java.util.*;
 
 public class SearchEngine {
-    private Map<String, Searchable> searchables = new HashMap<>();
+    private Map<String, Searchable> searchables = new TreeMap<>();
 
     public SearchEngine(Searchable[] search) {
 

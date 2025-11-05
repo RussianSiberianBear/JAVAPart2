@@ -6,7 +6,7 @@ import java.util.*;
 
 public class ProductBasket {
 
-    private Map<String, Searchable> products = new HashMap<>();
+    private Map<String, Searchable> products = new TreeMap<>();
 
     public ProductBasket() {
     }
@@ -66,7 +66,7 @@ public class ProductBasket {
     }
 
     public void empty() {
-        this.products = new HashMap<>();
+        this.products = new TreeMap<>();
     }
 
     public List<Searchable> deleteProductByName(String productName) {
