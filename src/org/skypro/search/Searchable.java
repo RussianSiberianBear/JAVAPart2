@@ -15,4 +15,6 @@ public interface Searchable {
     default String getStringRepresentation() {
         return "Имя объекта \"" + this.getName() + "\" Тип \"" + this.getContentType() + "\"";
     }
+
+    boolean equals(Searchable o);
 }
