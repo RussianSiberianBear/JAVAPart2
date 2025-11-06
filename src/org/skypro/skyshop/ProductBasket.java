@@ -6,7 +6,7 @@ import java.util.*;
 
 public class ProductBasket {
 
-    private Map<String, Searchable> products = new TreeMap<>();
+    private Map<String, List<Searchable>> products = new TreeMap<>();
 
     public ProductBasket() {
     }
@@ -15,7 +15,12 @@ public class ProductBasket {
         if (product == null) {
             throw new IllegalArgumentException("Добавляемый в корзину продукт не может быть NULL");
         }
-        products.put(product.getName(), product);
+        List<Searchable> p = new ArrayList<>();
+        if (products.containsKey(product.getName())) {
+            p = products.get(product.getName());
+        }
+        p.add(product);
+        products.put(product.getName(), p);
         return true;
     }
 
@@ -24,9 +29,13 @@ public class ProductBasket {
         if (isEmpty()) {
             return sum;
         }
-        for (Map.Entry<String, Searchable> product : products.entrySet()) {
+        for (Map.Entry<String, List<Searchable>> product : products.entrySet()) {
             if (product != null) {
-                sum += product.getValue().getProductPrice();
+                for (Searchable p : product.getValue()) {
+                    if (p != null) {
+                        sum += p.getProductPrice();
+                    }
+                }
             }
         }
         return sum;
@@ -37,9 +46,13 @@ public class ProductBasket {
         if (isEmpty()) {
             return 0;     // тут можно принудительно 0 вернуть, так как кол-во товаров в нашем контексте всегда целое
         }
-        for (Map.Entry<String, Searchable> product : products.entrySet()) {
-            if (product != null && product.getValue().isSpecial()) {
-                cnt++;
+        for (Map.Entry<String, List<Searchable>> product : products.entrySet()) {
+            if (product != null) {
+                for (Searchable p : product.getValue()) {
+                    if (p != null && p.isSpecial()) {
+                        cnt++;
+                    }
+                }
             }
         }
         return cnt;
@@ -51,9 +64,13 @@ public class ProductBasket {
         if (this.isEmpty()) {
             return ("В корзине пусто!");
         }
-        for (Map.Entry<String, Searchable> product : products.entrySet()) {
+        for (Map.Entry<String, List<Searchable>> product : products.entrySet()) {
             if (product != null) {
-                result += "\n" + product.getValue().getStringRepresentation();
+                for (Searchable p : product.getValue()) {
+                    if (p != null) {
+                        result += "\n" + p.getStringRepresentation();
+                    }
+                }
             }
         }
         result += "\nИтого: " + this.getTotalBasketCost();
@@ -74,18 +91,13 @@ public class ProductBasket {
         if (productName == null || productName.isBlank()) {
             throw new IllegalArgumentException("Наименование удаляемого товара не может быть пустым!");
         }
-        if (isEmpty()) {
-            return new ArrayList<>();
-        }
-
         List<Searchable> delProducts = new ArrayList<>();
-        Iterator<Map.Entry<String, Searchable>> iterator = products.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, Searchable> product = iterator.next();
-            if (product.getValue().getName().equals(productName)) {
-                delProducts.add(product.getValue());
-                iterator.remove();
-            }
+        if (isEmpty()) {
+            return delProducts;
+        }
+        if (products.containsKey(productName)) {
+            delProducts = products.get(productName);
+            products.remove(productName);
         }
         return delProducts;
     }
