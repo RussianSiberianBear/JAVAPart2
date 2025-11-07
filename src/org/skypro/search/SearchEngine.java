@@ -5,21 +5,26 @@ import org.skypro.exeption.BestResultNotFound;
 import java.util.*;
 
 public class SearchEngine {
-    private Map<String, Searchable> searchables = new TreeMap<>();
+    private Set<Searchable> searchables = new HashSet<>();
 
     public SearchEngine(Searchable[] search) {
-
-        for (Searchable s : search) {
-            searchables.put(s.getName(), s);
-        }
+        Collections.addAll(searchables, search);
     }
 
-    public Map<String, Searchable> search(String search) throws BestResultNotFound {
+    public Set<Searchable> search(String search) throws BestResultNotFound {
 
-        Map<String, Searchable> result = new HashMap<>();
-        for (Map.Entry<String, Searchable> product : searchables.entrySet()) {
-            if (product != null && countSubstringIgnoreCase(product.getValue().searchTerm(), search) > 0) {
-                result.put(product.getValue().getName(), product.getValue());
+        Set<Searchable> result = new TreeSet<>(
+                (s1, s2) -> {
+                    if (s2.getName().length() < s1.getName().length()) {
+                        return -1;
+                    } else if (s2.getName().length() > s1.getName().length()) {
+                        return 1;
+                    } else return s2.getName().compareTo(s1.getName());
+                }
+        );
+        for (Searchable product : searchables) {
+            if (product != null && countSubstringIgnoreCase(product.searchTerm(), search) > 0) {
+                result.add(product);
             }
         }
         if (result.isEmpty()) {

@@ -7,6 +7,7 @@ import org.skypro.search.Searchable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class App {
 
@@ -72,7 +73,7 @@ public class App {
         System.out.println();
         System.out.println("Ищем имеющийся продукт");
         SearchEngine searchEngine = new SearchEngine(productsArr);
-        Map<String, Searchable> findProducts = searchEngine.search("кош");
+        Set<Searchable> findProducts = searchEngine.search("кош");
         if (findProducts == null || findProducts.isEmpty()) {
             System.out.println("Список поиска пуст!");
         } else {
