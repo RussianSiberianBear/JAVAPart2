@@ -13,15 +13,8 @@ public class SearchEngine {
 
     public Set<Searchable> search(String search) throws BestResultNotFound {
 
-        Set<Searchable> result = new TreeSet<>(
-                (s1, s2) -> {
-                    if (s2.getName().length() < s1.getName().length()) {
-                        return -1;
-                    } else if (s2.getName().length() > s1.getName().length()) {
-                        return 1;
-                    } else return s2.getName().compareTo(s1.getName());
-                }
-        );
+        Set<Searchable> result = new TreeSet<>(Searchable.getInverseComparator());
+
         for (Searchable product : searchables) {
             if (product != null && countSubstringIgnoreCase(product.searchTerm(), search) > 0) {
                 result.add(product);
