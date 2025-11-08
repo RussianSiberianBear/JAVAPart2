@@ -4,6 +4,8 @@ import org.skypro.exeption.BestResultNotFound;
 
 import java.util.*;
 
+import java.util.stream.Collectors;
+
 public class SearchEngine {
     private Set<Searchable> searchables = new HashSet<>();
 
@@ -13,34 +15,21 @@ public class SearchEngine {
 
     public Set<Searchable> search(String search) throws BestResultNotFound {
 
-        Set<Searchable> result = new TreeSet<>(Searchable.getInverseComparator());
-
-        for (Searchable product : searchables) {
-            if (product != null && countSubstringIgnoreCase(product.searchTerm(), search) > 0) {
-                result.add(product);
-            }
+        if (search == null || search.isEmpty()) {
+            throw new IllegalArgumentException("Строка для поиска не может быть пуста!");
         }
+
+        Set<Searchable> result = searchables.stream()
+                .filter(Objects::nonNull)
+                .filter(obj -> obj.searchTerm().toLowerCase().contains(search.toLowerCase()))
+                .collect(Collectors.toCollection(
+                        () -> new TreeSet<>(Searchable.getInverseComparator())
+                ));
+
         if (result.isEmpty()) {
             throw new BestResultNotFound("При поиске \"" + search + "\" подходящий объект не найден!");
         }
         return result;
-    }
-
-    public static int countSubstringIgnoreCase(String text, String substring) {
-
-        if (!(text != null && !text.isEmpty() && substring != null && !substring.isEmpty())) {
-            return 0;
-        }
-
-        text = text.toLowerCase();
-        substring = substring.toLowerCase();
-        int count = 0;
-        int index = 0;
-        while ((index = text.indexOf(substring, index)) != -1) {
-            count++;
-            index += substring.length(); // Перемещаемся после найденной подстроки
-        }
-        return count;
     }
 
 }
