@@ -3,6 +3,7 @@ package org.skypro.skyshop;
 import org.skypro.search.Searchable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ProductBasket {
 
@@ -29,32 +30,24 @@ public class ProductBasket {
         if (isEmpty()) {
             return sum;
         }
-        for (Map.Entry<String, List<Searchable>> product : products.entrySet()) {
-            if (product != null) {
-                for (Searchable p : product.getValue()) {
-                    if (p != null) {
-                        sum += p.getProductPrice();
-                    }
-                }
-            }
-        }
+        sum = products.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .mapToInt(Searchable::getProductPrice)
+                .sum();
         return sum;
     }
 
-    public int getCntSpecialProduct() {
-        int cnt = 0;
+    public long getCntSpecialProduct() {
+        long cnt;
         if (isEmpty()) {
             return 0;     // тут можно принудительно 0 вернуть, так как кол-во товаров в нашем контексте всегда целое
         }
-        for (Map.Entry<String, List<Searchable>> product : products.entrySet()) {
-            if (product != null) {
-                for (Searchable p : product.getValue()) {
-                    if (p != null && p.isSpecial()) {
-                        cnt++;
-                    }
-                }
-            }
-        }
+        cnt = products.values().stream()
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .filter(Searchable::isSpecial)
+                .count();
         return cnt;
     }
 
@@ -64,15 +57,12 @@ public class ProductBasket {
         if (this.isEmpty()) {
             return ("В корзине пусто!");
         }
-        for (Map.Entry<String, List<Searchable>> product : products.entrySet()) {
-            if (product != null) {
-                for (Searchable p : product.getValue()) {
-                    if (p != null) {
-                        result += "\n" + p.getStringRepresentation();
-                    }
-                }
-            }
-        }
+        result += products.values().stream()
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .map(obj -> "\n" + obj.getStringRepresentation())
+                .collect(Collectors.joining());
+
         result += "\nИтого: " + this.getTotalBasketCost();
         result += "\nСпециальных товаров: " + this.getCntSpecialProduct();
         return result;
